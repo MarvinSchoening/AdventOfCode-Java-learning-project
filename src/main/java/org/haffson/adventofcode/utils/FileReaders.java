@@ -42,4 +42,15 @@ public class FileReaders {
         }
         return new int[0];
     }
+
+    public static List<String> readFileAsStringList(String fileName) {
+        List<String> stringList = new ArrayList<>();
+        try {
+            stringList = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.err.println("cat: Fehler beim Verarbeiten von " + fileName);
+        }
+
+        return stringList;
+    }
 }
