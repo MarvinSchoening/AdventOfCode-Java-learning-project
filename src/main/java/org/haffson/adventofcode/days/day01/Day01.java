@@ -17,6 +17,9 @@ public class Day01 implements Days {
     /** The puzzle status {@code HashMap} */
     private final HashMap<String, ProblemStatusEnum> problemStatus;
 
+    /** Our frequency's **/
+    private final int[] frequencyArr;
+
     /**
      * Causes the input file to be parsed into the frequencies array ({@code frequencies}).
      *
@@ -25,8 +28,9 @@ public class Day01 implements Days {
     @Autowired
     Day01(FileReaders fileReaders) {
         this.problemStatus = new HashMap<>();
-        this.problemStatus.put("1", ProblemStatusEnum.UNSOLVED);
+        this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
         this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
+        frequencyArr = fileReaders.readFileAsIntArr("input\\day1\\day01Input");
     }
 
     @Override
@@ -56,6 +60,11 @@ public class Day01 implements Days {
      * @return the final frequency
      */
     private int calculateFrequency() {
-        return 0;
+        int frequency = 0;
+
+        for(int freq : frequencyArr){
+            frequency += freq;
+        }
+        return frequency;
     }
 }
