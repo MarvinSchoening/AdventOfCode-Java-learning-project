@@ -7,7 +7,6 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +30,15 @@ public class FileReaders {
     public static int[] readFileAsIntArr(String fileName) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-
             int[] intArray = new int[lines.size()];
 
-            for(int i = 0; i < lines.size(); i++){
+            for (int i = 0; i < lines.size(); i++) {
                 intArray[i] = Integer.parseInt(lines.get(i));
             }
 
             return intArray;
-        }
-        catch ( IOException e ) {
-            System.err.println( "cat: Fehler beim Verarbeiten von " + fileName );
+        } catch (IOException e) {
+            System.err.println("cat: Fehler beim Verarbeiten von " + fileName);
         }
         return new int[0];
     }

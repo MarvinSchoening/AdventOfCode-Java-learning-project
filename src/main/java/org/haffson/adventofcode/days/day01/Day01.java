@@ -6,7 +6,8 @@ import org.haffson.adventofcode.utils.FileReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.sql.SQLOutput;
+import java.util.*;
 
 /**
  * Implementation for <i>Day 1: Chronal Calibration</i>.
@@ -14,10 +15,14 @@ import java.util.HashMap;
 @Component
 public class Day01 implements Days {
 
-    /** The puzzle status {@code HashMap} */
+    /**
+     * The puzzle status {@code HashMap}
+     */
     private final HashMap<String, ProblemStatusEnum> problemStatus;
 
-    /** Our frequency's **/
+    /**
+     * Our frequency's
+     **/
     private final int[] frequencyArr;
 
     /**
@@ -29,7 +34,7 @@ public class Day01 implements Days {
     Day01(FileReaders fileReaders) {
         this.problemStatus = new HashMap<>();
         this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
-        this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
+        this.problemStatus.put("2", ProblemStatusEnum.SOLVED);
         frequencyArr = fileReaders.readFileAsIntArr("input\\day1\\day01Input");
     }
 
@@ -50,7 +55,7 @@ public class Day01 implements Days {
 
     @Override
     public String secondPart() {
-        return null;
+        return "Part 2 - Duplicated Frequency: " + findFirstDuplicatedFrequency();
     }
 
     /**
@@ -62,9 +67,28 @@ public class Day01 implements Days {
     private int calculateFrequency() {
         int frequency = 0;
 
-        for(int freq : frequencyArr){
+        for (int freq : frequencyArr) {
             frequency += freq;
         }
         return frequency;
+    }
+
+    private int findFirstDuplicatedFrequency() {
+        int result = 0;
+        Set<Integer> calculatedFrequencys = new HashSet<>();
+
+        calculatedFrequencys.add(result);
+
+        for (int i = 0; true; i++) {
+            if (frequencyArr.length == i) {
+                i = 0;
+            }
+
+            result += frequencyArr[i];
+
+            if (!calculatedFrequencys.add(result)) {
+                return result;
+            }
+        }
     }
 }
