@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Implementation for <i>Day 2: Inventory Management System</i>.
@@ -19,7 +20,7 @@ public class Day02 implements Days {
      */
     private final HashMap<String, ProblemStatusEnum> problemStatus;
 
-    private final List<String> inputList;
+    protected List<String> inputList;
 
     /**
      * Causes the input file to be parsed into the frequencies array ({@code frequencies}).
@@ -51,22 +52,22 @@ public class Day02 implements Days {
 
     @Override
     public String secondPart() {
-        return null;
+        return "Common: " + getCommonString();
     }
 
+    /**
+     * FIRST PART
+     */
     private int checksum() {
-
-        Map<Character, Integer> inputMap;
-
         int exactTwo = 0;
         int exactThree = 0;
 
         for (int i = 0; i < inputList.size(); i++) {
-            if (hasNExactMembers(countLetters(inputList.get(i)), 2)) {
+            if (hasNExactMembers(2, countLetters(inputList.get(i)))) {
                 exactTwo++;
             }
 
-            if (hasNExactMembers(countLetters(inputList.get(i)), 3)) {
+            if (hasNExactMembers(3, countLetters(inputList.get(i)))) {
                 exactThree++;
             }
         }
@@ -74,33 +75,47 @@ public class Day02 implements Days {
         return exactTwo * exactThree;
     }
 
-    private boolean hasNExactMembers(Map<Character, Integer> map, int n) {
-        Set set = map.entrySet();
-        Iterator iterator = set.iterator();
-        boolean exactly = false;
+    private boolean hasNExactMembers(int n, Map<Character, Integer> map) {
+        AtomicBoolean exactly = new AtomicBoolean(false);
 
-        while (iterator.hasNext()) {
-            Map.Entry mapEntry = (Map.Entry) iterator.next();
-            if (mapEntry.getValue().equals(n)) {
-                exactly = true;
+        map.forEach((key, value) -> {
+            if (value == n) {
+                exactly.set(true);
             }
-        }
+        });
 
-        return exactly;
+        return exactly.get();
     }
 
 
+    /**
+     * Counts how often a single letter is used in a string
+     *
+     * @param input Input string
+     * @return Map letter as key and count as value
+     */
     private Map<Character, Integer> countLetters(String input) {
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (map.containsKey(c)) {
-                int cnt = map.get(c);
-                map.put(c, ++cnt);
+                int cValue = map.get(c);
+                map.put(c, ++cValue);
             } else {
                 map.put(c, 1);
             }
         }
         return map;
     }
+
+
+    /**
+     * SECOND PART
+     */
+    private String getCommonString() {
+
+
+        return "";
+    }
+
 }

@@ -23,7 +23,7 @@ public class Day01 implements Days {
     /**
      * Our frequency's
      **/
-    private final int[] frequencyArr;
+    public int[] frequencyArr;
 
     /**
      * Causes the input file to be parsed into the frequencies array ({@code frequencies}).
